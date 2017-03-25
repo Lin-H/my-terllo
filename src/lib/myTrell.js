@@ -10,7 +10,7 @@ class Trell {
   }
   ajax(method, url, data, opt) {
     const xhr = new XMLHttpRequest()
-    xhr.open(method, `${url}?key=${this.key}&token=${this.token}`, true)
+    xhr.open(method, `${url}?key=${this.key}&token=${this.token}`, true)// TODO deal with params of GET method
     if (method == 'POST') {
       xhr.setRequestHeader = 'Content-Type: applicetion/json'
     }
