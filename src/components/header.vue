@@ -17,13 +17,7 @@ export default {
   name: 'header',
   data() {
     return {
-      boards: []
     }
   },
-  // created() {
-  //   this.trell.members().then((data) => {
-  //     this.boards = data.idBoards;
-  //   })
-  // }
 }
 </script>

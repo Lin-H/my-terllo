@@ -6,12 +6,18 @@ class Trell {
     this.authEndpoint = 'https://trello.com'
     this.intentEndpoint = 'https://trello.com'
     this.key = key || '61c39ec31477886b0e6794984902a4f9' // lin-h's key
-    this.token = 'ad7ee64a2c5c68228a73c16a678ecc53fa8698c5cfead8e6a88e6c727c6bdeaa'
+    this.token = ''
+    this.prefix = `${this.apiEndpoint}/${this.version}`
+    this.url = '' // use for url concatenation
   }
   ajax(method, url, data, opt) {
     const xhr = new XMLHttpRequest()
-    xhr.open(method, `${url}?key=${this.key}&token=${this.token}`, true)// TODO deal with params of GET method
-    if (method == 'POST') {
+    let fullUrl = `${this.prefix}${url}?key=${this.key}&token=${this.token}`
+    if (method == 'GET' || method == 'DELETE') {
+      xhr.open(method, `${fullUrl}&${Trell.param(data)}`, true)
+    }
+    if (method == 'POST' || method == 'PUT') {
+      xhr.open(method, `${fullUrl}`, true)
       xhr.setRequestHeader = 'Content-Type: applicetion/json'
     }
     xhr.responseType = 'json'
@@ -19,7 +25,6 @@ class Trell {
       xhr.onreadystatechange = function () {
         if (xhr.status === 200) {
           if (xhr.readyState === XMLHttpRequest.DONE) {
-            console.log(xhr.response)
             resolve(xhr.response)
           }
         } else {
@@ -32,8 +37,44 @@ class Trell {
   get(url, data, opt) {
     return this.ajax('GET', url, data, opt);
   }
-  members() {
-    return this.get(`${this.apiEndpoint}/${this.version}/members/me`);
+  post(url, data, opt) {
+    return this.ajax('POST', url, data, opt);
+  }
+  put(url, data, opt) {
+    return this.ajax('PUT', url, data, opt);
+  }
+  delete(url, data, opt) {
+    return this.ajax('DELETE', url, data, opt);
+  }
+  // get(data, opt) {
+  //   let url = this.url
+  //   this.url = ''
+  //   return this.ajax('GET', url, data, opt);
+  // }
+  // post(data, opt) {
+  //   let url = this.url
+  //   this.url = ''
+  //   return this.ajax('POST', url, data, opt);
+  // }
+  // put(data, opt) {
+  //   let url = this.url
+  //   this.url = ''
+  //   return this.ajax('PUT', url, data, opt);
+  // }
+  // delete(data, opt) {
+  //   let url = this.url
+  //   this.url = ''
+  //   return this.ajax('DELETE', url, data, opt);
+  // }
+  members(param = '') {
+    this.url += '/member/' + param;
+    return this;
+  }
+  static param(o) {
+    if (!o) {
+      return ''
+    }
+    return Object.keys(o).reduce((p, c) => (!p ? `${c}=${o[c]}` : `${p}&${c}=${o[c]}`), '')
   }
 }
 
