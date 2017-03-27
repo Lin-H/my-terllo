@@ -18,7 +18,9 @@ npm run build
 npm run build --report
 ```
 
-[x] boards
-[ ] token input
-[ ] lists
-[ ] cards
+- [x] boards
+- [x] token input
+- [ ] loading indicator
+- [ ] personal information
+- [ ] lists
+- [ ] cards

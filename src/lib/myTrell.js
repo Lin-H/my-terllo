@@ -10,6 +10,9 @@ class Trell {
     this.prefix = `${this.apiEndpoint}/${this.version}`
     this.url = '' // use for url concatenation
   }
+  setToken(token) {
+    this.token = token
+  }
   ajax(method, url, data, opt) {
     const xhr = new XMLHttpRequest()
     let fullUrl = `${this.prefix}${url}?key=${this.key}&token=${this.token}`

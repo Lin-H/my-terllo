@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import login from '@/router/login';
 import boards from '@/router/boards';
 import list from '@/router/list';
 
@@ -16,6 +17,11 @@ export default new Router({
       path: '/list/:boardId',
       name: 'list',
       component: list
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: login
     }
   ],
 });
